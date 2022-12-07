@@ -21,7 +21,7 @@ var getFbQueue = require('../../helpers/getFbQueue.js');
 describe('Send Search Event module', function () {
   setupTests.setup();
 
-  test.only('add call to facebook queue', function () {
+  test('add call to facebook queue', function () {
     sendSearchEvent({ searchString: 'search' });
     expect(getFbQueue.mock.calls[0]).toEqual([
       'track',

@@ -70,7 +70,7 @@ describe('Configuration view', () => {
     });
   });
 
-  test.only('handles form validation correctly', async () => {
+  test('handles form validation correctly', async () => {
     renderView(Configuration);
 
     extensionBridge.init({
