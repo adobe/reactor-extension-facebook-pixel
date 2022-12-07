@@ -201,8 +201,8 @@
       }
     },
     {
-      "name": "send-add-to-wishlist-event",
-      "displayName": "Send Add To Wishlist Event",
+      "name": "add-to-wishlist-event",
+      "displayName": "Add To Wishlist Event",
       "libPath": "src/lib/actions/sendAddToWishlistEvent.js",
       "viewPath": "actions/sendAddToWishlistEvent.html",
       "schema": {

@@ -46,7 +46,7 @@ export default (env, argv) => {
           const itemName = itemDescriptor.name;
           const itemNameCamelized = camelCase(itemName);
           itemNameCapitalized = capitalize(itemNameCamelized);
-          chunkName = `${typePluralized}/${itemNameCamelized}`;
+          chunkName = `${itemDescriptor.viewPath.replace('.html', '')}`;
         }
 
         const entryPath = `./.entries/${chunkName}.js`;
