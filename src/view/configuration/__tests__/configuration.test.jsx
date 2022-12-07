@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,16 +9,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* eslint-disable no-template-curly-in-string */
-
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { screen } from '@testing-library/react';
+import renderView from '../../__tests_helpers__/renderView';
 
 import Configuration from '../configuration';
 import createExtensionBridge from '../../__tests_helpers__/createExtensionBridge';
 
-import { inputOnChange } from '../../__tests_helpers__/jsDomHelpers';
+import { changeInputValue } from '../../__tests_helpers__/jsDomHelpers';
 
 let extensionBridge;
 
@@ -31,27 +28,19 @@ afterEach(() => {
   delete window.extensionBridge;
 });
 
-const getFromFields = () => {
-  const { queryByLabelText } = screen;
-
-  return {
-    pixelIdInput: queryByLabelText(/pixel id/i),
-    eventIdInput: queryByLabelText(/event id/i)
-  };
-};
+const getFromFields = () => ({
+  pixelIdInput: screen.queryByLabelText(/pixel id/i),
+  eventIdInput: screen.queryByLabelText(/event id/i)
+});
 
 describe('Configuration view', () => {
-  beforeEach(() => {
-    render(<Configuration />);
-  });
-
   test('sets form values from settings', async () => {
-    await act(async () => {
-      extensionBridge.init({
-        settings: {
-          pixelId: '12345'
-        }
-      });
+    renderView(Configuration);
+
+    extensionBridge.init({
+      settings: {
+        pixelId: '12345'
+      }
     });
 
     const { pixelIdInput, eventIdInput } = getFromFields();
@@ -62,20 +51,18 @@ describe('Configuration view', () => {
   });
 
   test('sets settings from form values', async () => {
-    await act(async () => {
-      extensionBridge.init({
-        settings: {
-          pixelId: '12345'
-        }
-      });
+    renderView(Configuration);
+
+    extensionBridge.init({
+      settings: {
+        pixelId: '12345'
+      }
     });
 
     const { pixelIdInput, eventIdInput } = getFromFields();
 
-    await act(async () => {
-      inputOnChange(pixelIdInput, '123456');
-      inputOnChange(eventIdInput, '111111');
-    });
+    await changeInputValue(pixelIdInput, '123456');
+    await changeInputValue(eventIdInput, '111111');
 
     expect(extensionBridge.getSettings()).toEqual({
       pixelId: '123456',
@@ -83,13 +70,13 @@ describe('Configuration view', () => {
     });
   });
 
-  test('handles form validation correctly', async () => {
-    await act(async () => {
-      extensionBridge.init({
-        settings: {
-          pixelId: '12345'
-        }
-      });
+  test.only('handles form validation correctly', async () => {
+    renderView(Configuration);
+
+    extensionBridge.init({
+      settings: {
+        pixelId: '12345'
+      }
     });
 
     const { pixelIdInput } = getFromFields();
@@ -99,11 +86,9 @@ describe('Configuration view', () => {
     expect(pixelIdInput).not.toHaveAttribute('aria-invalid');
 
     // 2. Change input values.
-    inputOnChange(pixelIdInput, '');
+    await changeInputValue(pixelIdInput, '');
 
-    await act(async () => {
-      extensionBridge.validate();
-    });
+    await extensionBridge.validate();
 
     // 3. Assert result.
     expect(pixelIdInput).toHaveAttribute('aria-invalid', 'true');

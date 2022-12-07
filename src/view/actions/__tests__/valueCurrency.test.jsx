@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,16 +9,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* eslint-disable no-template-curly-in-string */
-
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { screen } from '@testing-library/react';
+import renderView from '../../__tests_helpers__/renderView';
 
 import ValueCurrency from '../valueCurrency';
 import createExtensionBridge from '../../__tests_helpers__/createExtensionBridge';
 
-import { inputOnChange } from '../../__tests_helpers__/jsDomHelpers';
+import { changeInputValue } from '../../__tests_helpers__/jsDomHelpers';
 
 let extensionBridge;
 
@@ -32,27 +29,21 @@ afterEach(() => {
 });
 
 const getFromFields = () => {
-  const { queryByLabelText } = screen;
-
   return {
-    valueInput: queryByLabelText(/value/i),
-    currencyInput: queryByLabelText(/currency/i)
+    valueInput: screen.queryByLabelText(/value/i),
+    currencyInput: screen.queryByLabelText(/currency/i)
   };
 };
 
 describe('Configuration view', () => {
-  beforeEach(() => {
-    render(<ValueCurrency />);
-  });
-
   test('sets form values from settings', async () => {
-    await act(async () => {
-      extensionBridge.init({
-        settings: {
-          value: 'abc',
-          currency: 'USD'
-        }
-      });
+    renderView(ValueCurrency);
+
+    extensionBridge.init({
+      settings: {
+        value: 'abc',
+        currency: 'USD'
+      }
     });
 
     const { valueInput, currencyInput } = getFromFields();
@@ -62,21 +53,19 @@ describe('Configuration view', () => {
   });
 
   test('sets settings from form values', async () => {
-    await act(async () => {
-      extensionBridge.init({
-        settings: {
-          value: 'abc',
-          currency: 'USD'
-        }
-      });
+    renderView(ValueCurrency);
+
+    extensionBridge.init({
+      settings: {
+        value: 'abc',
+        currency: 'USD'
+      }
     });
 
     const { valueInput, currencyInput } = getFromFields();
 
-    await act(async () => {
-      inputOnChange(valueInput, 'abcd');
-      inputOnChange(currencyInput, 'EUR');
-    });
+    await changeInputValue(valueInput, 'abcd');
+    await changeInputValue(currencyInput, 'EUR');
 
     expect(extensionBridge.getSettings()).toEqual({
       value: 'abcd',

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,6 +9,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* istanbul ignore file */
+
+import { act } from '@testing-library/react';
+
 export default () => {
   let registeredOptions;
 
@@ -17,10 +21,18 @@ export default () => {
       registeredOptions = options;
     },
     init(...args) {
-      return registeredOptions.init.apply(this, args);
+      act(() => {
+        registeredOptions.init.apply(this, args);
+      });
     },
-    validate(...args) {
-      return registeredOptions.validate.apply(this, args);
+    async validate(...args) {
+      let validationResult;
+
+      await act(async () => {
+        validationResult = registeredOptions.validate.apply(this, args);
+      });
+
+      return validationResult;
     },
     getSettings(...args) {
       return registeredOptions.getSettings.apply(this, args);

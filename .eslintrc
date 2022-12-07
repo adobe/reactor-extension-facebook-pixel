@@ -3,7 +3,17 @@
     "es6": true,
     "jest": true
   },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "babelOptions": {
+      "plugins": ["@babel/plugin-syntax-import-assertions"]
+    }
+  },
   "extends": ["plugin:prettier/recommended"],
+  "plugins": ["react-hooks", "header"],
   "rules": {
     "prettier/prettier": "error",
     "camelcase": [2, { "properties": "always" }],
@@ -44,6 +54,7 @@
       {
         "destructuring": "all"
       }
-    ]
+    ],
+    "header/header": [2, "block", [{ "pattern": "Copyright \\d{4} Adobe" }]]
   }
 }
