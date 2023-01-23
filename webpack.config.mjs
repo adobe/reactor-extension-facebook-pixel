@@ -28,7 +28,7 @@ const plugins = [];
 export default (env, argv) => {
   // Each view becomes its own "app". These are automatically generated based on naming convention.
   ['configuration', 'action'].forEach((type) => {
-    const typePluralized = type + 's';
+    const typePluralized = `${type}s`;
     const delegates =
       type === 'configuration'
         ? [extension['configuration']]
