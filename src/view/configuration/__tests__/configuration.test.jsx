@@ -30,7 +30,9 @@ afterEach(() => {
 
 const getFromFields = () => ({
   pixelIdInput: screen.queryByLabelText(/pixel id/i),
-  eventIdInput: screen.queryByLabelText(/event id/i)
+  eventIdInput: screen.queryByLabelText(/event id/i, {
+    selector: '[name="eventId"]'
+  })
 });
 
 describe('Configuration view', () => {

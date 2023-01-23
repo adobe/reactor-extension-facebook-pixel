@@ -11,7 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import React from 'react';
-import { TextField, Flex } from '@adobe/react-spectrum';
+import {
+  TextField,
+  Flex,
+  ContextualHelp,
+  Heading,
+  Content,
+  Link
+} from '@adobe/react-spectrum';
 import WrappedTextField from '../../components/wrappedTextField';
 
 export default function ConfigurationFields() {
@@ -26,11 +33,37 @@ export default function ConfigurationFields() {
         necessityIndicator="label"
         supportDataElement
       />
+
       <WrappedTextField
         name="eventId"
         component={TextField}
         width="size-4600"
         label="Event ID"
+        contextualHelp={
+          <ContextualHelp>
+            <Heading>Need help?</Heading>
+            <Content>
+              <p>
+                The Event ID parameter is an identifier that can uniquely
+                distinguish between similar events sent through Meta Pixel and
+                the Conversions API.
+              </p>
+              <p>
+                Learn more about{' '}
+                <Link>
+                  <a
+                    href="https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    handling duplicate Pixel and Conversions API events
+                  </a>
+                </Link>
+                .
+              </p>
+            </Content>
+          </ContextualHelp>
+        }
         supportDataElement
       />
     </Flex>
