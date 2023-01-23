@@ -31,7 +31,7 @@
   "actions": [
     {
       "name": "send-page-view",
-      "displayName": "Send Page View (deprecated)",
+      "displayName": "Send Page View",
       "libPath": "src/lib/actions/sendPageView.js",
       "schema": {}
     },
