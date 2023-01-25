@@ -26,8 +26,8 @@ export default function SendViewContentView() {
     'content_name',
     'content_type',
     'contents',
-    'currency',
-    'value'
+    'value',
+    'currency'
   ]);
 
   return (

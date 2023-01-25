@@ -48,8 +48,12 @@ export default (fields) => {
       return (
         <Flex direction="column" gap="size-65">
           {fields.map((fieldKey) => {
-            const { label, hasDataElementSupport, description } =
-              fieldsData[fieldKey];
+            const {
+              label,
+              hasDataElementSupport,
+              description,
+              contextualHelp
+            } = fieldsData[fieldKey];
             return (
               <WrappedTextField
                 key={fieldKey}
@@ -58,6 +62,7 @@ export default (fields) => {
                 width="size-4600"
                 label={label}
                 description={description}
+                contextualHelp={contextualHelp}
                 supportDataElement={hasDataElementSupport}
               />
             );

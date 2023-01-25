@@ -10,22 +10,69 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import React from 'react';
+import { Heading, Link, ContextualHelp, Content } from '@adobe/react-spectrum';
+
 export default {
   value: {
     label: 'Value',
-    hasDataElementSupport: true
+    hasDataElementSupport: true,
+    description: 'The value of a user performing this event to the business.'
   },
   currency: {
     label: 'Currency',
-    hasDataElementSupport: true
+    hasDataElementSupport: true,
+    description: 'The currency for the value specified.'
   },
   contents: {
     label: 'Contents',
-    hasDataElementSupport: true
+    hasDataElementSupport: true,
+    description: (
+      <span>
+        An array of JSON objects that contains the quantity and the
+        International Article Number (EAN) when applicable, or other product or
+        content identifier(s). <strong>id</strong> and <strong>quantity</strong>{' '}
+        are the required fields.
+      </span>
+    )
   },
   content_type: {
     label: 'Content Type',
-    hasDataElementSupport: true
+    hasDataElementSupport: true,
+    contextualHelp: (
+      <ContextualHelp>
+        <Heading>Need help?</Heading>
+        <Content>
+          <p>
+            Either <strong>product</strong> or <strong>product_group</strong>{' '}
+            based on the <strong>content_ids</strong> or{' '}
+            <strong>contents</strong> being passed.
+          </p>
+          <p>
+            If the IDs being passed in <strong>content_ids</strong> or{' '}
+            <strong>contents</strong> parameter are IDs of products then the
+            value should be product.{' '}
+          </p>
+          <p>
+            If product group IDs are being passed, then the value should be{' '}
+            <strong>product_group</strong>.
+          </p>
+          <p>
+            Learn more about{' '}
+            <Link>
+              <a
+                href="https://developers.facebook.com/docs/meta-pixel/reference#object-properties"
+                rel="noreferrer"
+                target="_blank"
+              >
+                standard events properties
+              </a>
+            </Link>
+            .
+          </p>
+        </Content>
+      </ContextualHelp>
+    )
   },
   content_name: {
     label: 'Content Name',
@@ -39,6 +86,7 @@ export default {
     label: 'Content IDs',
     hasDataElementSupport: true,
     description:
-      "Product IDs associated with the event, such as SKUs (e.g. ['ABC123', 'XYZ789'])"
+      'Product IDs associated with the event, such as SKUs (e.g. ["ABC123", ' +
+      '"XYZ789"]). The value must be an array of integers or strings.'
   }
 };
