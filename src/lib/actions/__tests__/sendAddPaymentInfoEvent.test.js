@@ -48,7 +48,8 @@ describe('Send Add Payment Info Event module', function () {
   test('logs message to turbine', function () {
     sendAddPaymentInfoEvent();
     expect(turbine.logger.log.mock.calls[0]).toEqual([
-      `Queue command: fbq("track", "AddPaymentInfo") with eventId: ${setupTests.mockEventId}.`
+      'Queue command: fbq("track", "AddPaymentInfo", undefined) with' +
+        ' eventId: 11111.'
     ]);
   });
 });

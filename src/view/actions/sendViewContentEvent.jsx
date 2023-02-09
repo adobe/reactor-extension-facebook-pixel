@@ -21,13 +21,13 @@ export default function SendViewContentView() {
     validate,
     getReactComponent: Fields
   } = formBuilder([
-    'content_ids',
     'content_category',
+    'content_ids',
     'content_name',
     'content_type',
     'contents',
-    'value',
-    'currency'
+    'currency',
+    'value'
   ]);
 
   return (

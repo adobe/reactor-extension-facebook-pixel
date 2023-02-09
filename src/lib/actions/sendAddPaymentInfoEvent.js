@@ -15,7 +15,10 @@ module.exports = function (settings) {
   var eventId = turbine.getExtensionSettings().eventId;
 
   fbq('track', 'AddPaymentInfo', settings, { eventID: eventId });
+
   turbine.logger.log(
-    `Queue command: fbq("track", "AddPaymentInfo") with eventId: ${eventId}.`
+    `Queue command: fbq("track", "AddPaymentInfo", ${JSON.stringify(
+      settings
+    )})` + ` with eventId: ${eventId}.`
   );
 };

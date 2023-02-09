@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import React from 'react';
-import { TextField, Flex } from '@adobe/react-spectrum';
+import { TextField, Flex, Link } from '@adobe/react-spectrum';
 import WrappedTextField from '../../components/wrappedTextField';
 import fieldsData from './fields';
 
@@ -19,52 +19,93 @@ export default (fields) => {
   return {
     getInitialValues: ({ initInfo }) => {
       const { settings } = initInfo;
-      const initValues = {};
+      let initValues = {};
 
       fields.forEach((fieldKey) => {
-        initValues[fieldKey] = settings?.[fieldKey] || '';
+        const values = fieldsData[fieldKey].getInitialValues?.(settings);
+
+        if (values) {
+          initValues = { ...initValues, ...values };
+        } else {
+          const v = settings?.[fieldKey];
+          if (v !== null && v !== undefined && v !== '') {
+            initValues[fieldKey] = v;
+          } else {
+            initValues[fieldKey] = '';
+          }
+        }
       });
 
       return initValues;
     },
 
     getSettings: ({ values }) => {
-      const settings = {};
+      let settings = {};
 
-      Object.entries(values).forEach(([name, value]) => {
-        if (value) {
-          settings[name] = value;
+      fields.forEach((fieldKey) => {
+        const fieldSettings = fieldsData[fieldKey].getSettings?.(values);
+
+        if (fieldSettings) {
+          settings = { ...settings, ...fieldSettings };
+        } else if (values[fieldKey] !== null && values[fieldKey] !== '') {
+          settings[fieldKey] = values[fieldKey];
         }
       });
 
       return settings;
     },
-    validate: () => {
-      const errors = {};
+    validate: (values) => {
+      let errors = {};
+
+      fields.forEach((fieldKey) => {
+        const fieldErrors = fieldsData[fieldKey].validate?.(values);
+        if (fieldErrors) {
+          errors = { ...errors, ...fieldErrors };
+        }
+      });
 
       return errors;
     },
     getReactComponent: () => {
       return (
         <Flex direction="column" gap="size-65">
+          <Link>
+            <a
+              href="https://developers.facebook.com/docs/meta-pixel/reference"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Learn more about Meta Pixel&rsquo;s standard events.
+            </a>
+          </Link>
+
           {fields.map((fieldKey) => {
             const {
               label,
               hasDataElementSupport,
               description,
-              contextualHelp
+              contextualHelp,
+              render
             } = fieldsData[fieldKey];
+
             return (
-              <WrappedTextField
-                key={fieldKey}
-                name={fieldKey}
-                component={TextField}
-                width="size-4600"
-                label={label}
-                description={description}
-                contextualHelp={contextualHelp}
-                supportDataElement={hasDataElementSupport}
-              />
+              render?.({
+                key: fieldKey,
+                label,
+                description,
+                hasDataElementSupport
+              }) || (
+                <WrappedTextField
+                  key={fieldKey}
+                  name={fieldKey}
+                  component={TextField}
+                  width="size-4600"
+                  label={label}
+                  description={description}
+                  contextualHelp={contextualHelp}
+                  supportDataElement={hasDataElementSupport}
+                />
+              )
             );
           })}
         </Flex>

@@ -44,29 +44,92 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          },
           "content_category": {
             "type": "string",
             "minLength": 1
           },
           "content_ids": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           },
           "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^%([^%]+)%$"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "currency": {
             "type": "string",
             "minLength": 1
           },
           "num_items": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -81,25 +144,81 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          },
           "content_category": {
             "type": "string",
             "minLength": 1
           },
           "content_ids": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
           },
           "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minItems": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
+          },
+          "currency": {
             "type": "string",
-            "minLength": 1
+            "minItems": 1
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -114,13 +233,92 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
+          "content_category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content_ids": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
+          },
+          "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minItems": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
+          },
+          "currency": {
+            "type": "string",
+            "minItems": 1
+          },
           "searchString": {
             "type": "string",
             "minLength": 1
+          },
+          "search_string": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minItems": 1
+              }
+            ]
           }
         },
-        "additionalProperties": false,
-        "required": ["searchString"]
+        "additionalProperties": false
       }
     },
     {
@@ -132,33 +330,96 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          },
           "content_category": {
             "type": "string",
             "minLength": 1
           },
           "content_ids": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           },
           "content_name": {
             "type": "string",
             "minLength": 1
           },
+          "content_type": {
+            "oneOf": [
+              {
+                "enum": ["product", "product_group"]
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
           "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "currency": {
             "type": "string",
             "minLength": 1
           },
-          "content_type": {
-            "type": "string",
-            "minLength": 1
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -173,29 +434,92 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          },
           "content_ids": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           },
           "content_name": {
             "type": "string",
             "minLength": 1
           },
           "content_type": {
+            "oneOf": [
+              {
+                "enum": ["product", "product_group"]
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "currency": {
             "type": "string",
             "minLength": 1
           },
-          "contents": {
-            "type": "string",
-            "minLength": 1
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -203,20 +527,35 @@
     },
     {
       "name": "add-to-wishlist-event",
-      "displayName": "Add To Wishlist Event",
+      "displayName": "Send Add To Wishlist Event",
       "libPath": "src/lib/actions/sendAddToWishlistEvent.js",
       "viewPath": "actions/sendAddToWishlistEvent.html",
       "schema": {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
+          "content_ids": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           },
           "content_name": {
             "type": "string",
@@ -226,13 +565,54 @@
             "type": "string",
             "minLength": 1
           },
-          "content_ids": {
+          "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "currency": {
             "type": "string",
             "minLength": 1
           },
-          "contents": {
-            "type": "string",
-            "minLength": 1
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -247,33 +627,103 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
+          "content_ids": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "content_name": {
             "type": "string",
             "minLength": 1
+          },
+          "content_type": {
+            "oneOf": [
+              {
+                "enum": ["product", "product_group"]
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "contents": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["id", "quantity"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           },
           "currency": {
             "type": "string",
             "minLength": 1
           },
-          "content_category": {
-            "type": "string",
-            "minLength": 1
-          },
-          "content_ids": {
-            "type": "string",
-            "minLength": 1
-          },
-          "contents": {
-            "type": "string",
-            "minLength": 1
-          },
-          "content_type": {
-            "type": "string",
-            "minLength": 1
-          },
           "num_items": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -288,7 +738,7 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
+          "content_name": {
             "type": "string",
             "minLength": 1
           },
@@ -296,13 +746,20 @@
             "type": "string",
             "minLength": 1
           },
-          "content_name": {
-            "type": "string",
-            "minLength": 1
-          },
           "currency": {
             "type": "string",
             "minLength": 1
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -317,7 +774,7 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
+          "content_name": {
             "type": "string",
             "minLength": 1
           },
@@ -325,13 +782,27 @@
             "type": "string",
             "minLength": 1
           },
-          "content_name": {
-            "type": "string",
-            "minLength": 1
-          },
           "status": {
-            "type": "string",
-            "minLength": 1
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -341,101 +812,31 @@
       "name": "send-contact-event",
       "displayName": "Send Contact Event",
       "libPath": "src/lib/actions/sendContactEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-customize-product-event",
-      "displayName": "Send Custom Product Event",
+      "displayName": "Send Customize Product Event",
       "libPath": "src/lib/actions/sendCustomizeProductEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-donate-event",
       "displayName": "Send Donate Event",
       "libPath": "src/lib/actions/sendDonateEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-find-location-event",
       "displayName": "Send Find Location Event",
       "libPath": "src/lib/actions/sendFindLocationEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-schedule-event",
       "displayName": "Send Schedule Event",
       "libPath": "src/lib/actions/sendScheduleEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-start-trial-event",
@@ -446,13 +847,31 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
           "currency": {
             "type": "string",
             "minLength": 1
+          },
+          "predicted_ltv": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -462,21 +881,7 @@
       "name": "send-submit-application-event",
       "displayName": "Send Submit Application Event",
       "libPath": "src/lib/actions/sendSubmitApplicationEvent.js",
-      "schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
-          "currency": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "additionalProperties": false
-      }
+      "schema": {}
     },
     {
       "name": "send-subscribe-event",
@@ -487,13 +892,31 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "value": {
-            "type": "string",
-            "minLength": 1
-          },
           "currency": {
             "type": "string",
             "minLength": 1
+          },
+          "predicted_ltv": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
           }
         },
         "additionalProperties": false

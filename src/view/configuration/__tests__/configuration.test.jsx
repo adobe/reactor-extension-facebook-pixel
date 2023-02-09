@@ -29,8 +29,8 @@ afterEach(() => {
 });
 
 const getFromFields = () => ({
-  pixelIdInput: screen.queryByLabelText(/pixel id/i),
-  eventIdInput: screen.queryByLabelText(/event id/i, {
+  pixelIdInput: screen.getByLabelText(/pixel id/i),
+  eventIdInput: screen.getByLabelText(/event id/i, {
     selector: '[name="eventId"]'
   })
 });

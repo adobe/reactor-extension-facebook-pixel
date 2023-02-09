@@ -14,9 +14,13 @@ governing permissions and limitations under the License.
 module.exports = function (settings) {
   var fbq = require('../helpers/getFbQueue');
   var eventId = turbine.getExtensionSettings().eventId;
-  var options = {
-    search_string: settings.searchString
-  };
+  var s = settings.search_string || settings.searchString;
+
+  var options = {};
+
+  if (s) {
+    options.search_string = s;
+  }
 
   fbq('track', 'Search', options, {
     eventID: eventId

@@ -16,6 +16,8 @@ module.exports = function (settings) {
 
   fbq('track', 'InitiateCheckout', settings, { eventID: eventId });
   turbine.logger.log(
-    `Queue command: fbq("track", "InitiateCheckout") with eventId: ${eventId}.`
+    `Queue command: fbq("track", "InitiateCheckout", ${JSON.stringify(
+      settings
+    )}) with eventId: ${eventId}.`
   );
 };
