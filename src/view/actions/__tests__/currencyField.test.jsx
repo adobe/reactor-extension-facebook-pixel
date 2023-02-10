@@ -15,7 +15,7 @@ import renderView from '../../__tests_helpers__/renderView';
 import Event from '../sendAddToCartEvent';
 import createExtensionBridge from '../../__tests_helpers__/createExtensionBridge';
 
-import { changeInputValue } from '../../__tests_helpers__/jsDomHelpers';
+import { changeComboboxValue } from '../../__tests_helpers__/jsDomHelpers';
 
 let extensionBridge;
 
@@ -71,7 +71,7 @@ describe('Currency field', () => {
 
     const input = getField();
 
-    await changeInputValue(input, '%ab%');
+    await changeComboboxValue(input, '%ab%');
 
     expect(extensionBridge.getSettings()).toEqual({
       currency: '%ab%'
@@ -89,7 +89,7 @@ describe('Currency field', () => {
 
     const input = getField();
 
-    await changeInputValue(input, 'EUR');
+    await changeComboboxValue(input, 'EUR');
 
     expect(extensionBridge.getSettings()).toEqual({
       currency: 'EUR'
@@ -107,7 +107,7 @@ describe('Currency field', () => {
 
     const input = getField();
 
-    await changeInputValue(input, '');
+    await changeComboboxValue(input, '');
 
     expect(extensionBridge.getSettings()).toEqual({});
   });
@@ -120,7 +120,7 @@ describe('Currency field', () => {
     const input = getField();
     expect(input).not.toHaveAttribute('aria-invalid');
 
-    await changeInputValue(input, 'USD');
+    await changeComboboxValue(input, 'USD');
     await extensionBridge.validate();
 
     expect(input).not.toHaveAttribute('aria-invalid', 'true');
@@ -134,7 +134,7 @@ describe('Currency field', () => {
     const input = getField();
     expect(input).not.toHaveAttribute('aria-invalid');
 
-    await changeInputValue(input, '%a%');
+    await changeComboboxValue(input, '%a%');
     await extensionBridge.validate();
 
     expect(input).not.toHaveAttribute('aria-invalid', 'true');
@@ -148,7 +148,7 @@ describe('Currency field', () => {
     const input = getField();
     expect(input).not.toHaveAttribute('aria-invalid');
 
-    await changeInputValue(input, 'a');
+    await changeComboboxValue(input, 'a');
     await extensionBridge.validate();
 
     expect(input).toHaveAttribute('aria-invalid', 'true');

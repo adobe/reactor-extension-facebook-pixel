@@ -38,6 +38,10 @@ export const changeInputValue = async (input, value) => {
   }
 };
 
+export const changeComboboxValue = async (input, value) => {
+  fireEvent.change(input, { target: { value } });
+};
+
 export const click = async (newTab) => {
   await userEvent.click(newTab);
 };
