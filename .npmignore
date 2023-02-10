@@ -1,9 +1,9 @@
 __tests__
 src/view
-createEntryFile.js
+createEntryFile.mjs
 coverage
 jest.config.js
-webpack.config.js
+webpack.config.mjs
 package-facebook-pixel-*.zip
 reactor-extension-meta-pixel-*.tgz
 \.*
