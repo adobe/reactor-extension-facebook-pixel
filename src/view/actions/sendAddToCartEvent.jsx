@@ -12,38 +12,30 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
-
-import ValueCurrency from './fields/valueCurrency';
-import ContentIds from './fields/contentIds';
-import Contents from './fields/contents';
-import ContentType from './fields/contentType';
-import ContentName from './fields/contentName';
-
-import initialValues from './helpers/getInitValues';
-import settings from './helpers/getSettings';
-import validate from './helpers/validate';
+import formBuilder from './helpers/formBuilder';
 
 export default function SendAddToCartEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder([
+    'content_ids',
+    'content_name',
+    'content_type',
+    'contents',
+    'currency',
+    'value',
+    'event_id'
+  ]);
+
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...initialValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...settings(values)
-      })}
-      validate={(values) => ({
-        ...validate(values)
-      })}
-      render={() => (
-        <>
-          <ValueCurrency />
-          <ContentIds />
-          <Contents />
-          <ContentType />
-          <ContentName />
-        </>
-      )}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }

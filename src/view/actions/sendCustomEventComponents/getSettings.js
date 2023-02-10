@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* eslint-disable camelcase */
 
-export default ({ name, parameters }) => {
+export default ({ name, parameters, event_id }) => {
   const settings = {
     name
   };
@@ -23,6 +23,10 @@ export default ({ name, parameters }) => {
 
   if (parameters.length) {
     settings.parameters = parameters;
+  }
+
+  if (event_id) {
+    settings.event_id = event_id;
   }
 
   return settings;

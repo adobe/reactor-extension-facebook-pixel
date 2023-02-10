@@ -9,10 +9,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* eslint-disable camelcase */
+
 import getEmptyProperty from './getEmptyPropertyValues';
 
 export default ({ settings }) => {
-  const { name = '', parameters = [] } = settings || {};
+  const { name = '', parameters = [], event_id = '' } = settings || {};
 
   // For the first time we create an action, there will be no properties.
   if (!parameters || parameters.length === 0) {
@@ -21,6 +23,7 @@ export default ({ settings }) => {
 
   return {
     name,
-    parameters
+    parameters,
+    event_id
   };
 };

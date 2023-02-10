@@ -10,4 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export default ({ pixelId, eventId }) => ({ pixelId, eventId });
+export default ({ pixelId, eventId }) => {
+  const settings = { pixelId };
+
+  if (eventId) {
+    settings.eventId = eventId;
+  }
+
+  return settings;
+};

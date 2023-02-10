@@ -12,34 +12,22 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
-
-import ValueCurrency from './fields/valueCurrency';
-import ContentName from './fields/contentName';
-import Status from './fields/status';
-
-import initialValues from './helpers/getInitValues';
-import settings from './helpers/getSettings';
-import validate from './helpers/validate';
+import formBuilder from './helpers/formBuilder';
 
 export default function SendCompleteRegistrationEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder(['content_name', 'currency', 'status', 'value', 'event_id']);
+
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...initialValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...settings(values)
-      })}
-      validate={(values) => ({
-        ...validate(values)
-      })}
-      render={() => (
-        <>
-          <ValueCurrency />
-          <Status />
-          <ContentName />
-        </>
-      )}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }

@@ -12,25 +12,30 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
-
-import SendSearchEventFields from './sendSearchEventComponents/fields';
-import getSendSearchEventInitValues from './sendSearchEventComponents/getInitValues';
-import getSendSearchEventSettings from './sendSearchEventComponents/getSettings';
-import validateSendSearchEventFields from './sendSearchEventComponents/validate';
+import formBuilder from './helpers/formBuilder';
 
 export default function SendSearchEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder([
+    'content_category',
+    'content_ids',
+    'contents',
+    'currency',
+    'search_string',
+    'value',
+    'event_id'
+  ]);
+
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...getSendSearchEventInitValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...getSendSearchEventSettings(values)
-      })}
-      validate={(values) => ({
-        ...validateSendSearchEventFields(values)
-      })}
-      render={() => <SendSearchEventFields />}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }

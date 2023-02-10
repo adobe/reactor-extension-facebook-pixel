@@ -29,8 +29,10 @@ afterEach(() => {
 });
 
 const getFromFields = () => ({
-  pixelIdInput: screen.queryByLabelText(/pixel id/i),
-  eventIdInput: screen.queryByLabelText(/event id/i)
+  pixelIdInput: screen.getByLabelText(/pixel id/i),
+  eventIdInput: screen.queryByLabelText(/event id/i, {
+    selector: '[name="eventId"]'
+  })
 });
 
 describe('Configuration view', () => {
@@ -39,15 +41,15 @@ describe('Configuration view', () => {
 
     extensionBridge.init({
       settings: {
-        pixelId: '12345'
+        pixelId: '12345',
+        eventId: '54321'
       }
     });
 
     const { pixelIdInput, eventIdInput } = getFromFields();
 
     expect(pixelIdInput.value).toBe('12345');
-    // test empty eventId
-    expect(eventIdInput.value).toBe('');
+    expect(eventIdInput.value).toBe('54321');
   });
 
   test('sets settings from form values', async () => {
@@ -55,7 +57,8 @@ describe('Configuration view', () => {
 
     extensionBridge.init({
       settings: {
-        pixelId: '12345'
+        pixelId: '12345',
+        eventId: '54321'
       }
     });
 
@@ -80,17 +83,25 @@ describe('Configuration view', () => {
     });
 
     const { pixelIdInput } = getFromFields();
-
-    // Validate case when inputs have empty values.
-    // 1. Check fields are not invalid.
     expect(pixelIdInput).not.toHaveAttribute('aria-invalid');
 
-    // 2. Change input values.
     await changeInputValue(pixelIdInput, '');
-
     await extensionBridge.validate();
 
-    // 3. Assert result.
     expect(pixelIdInput).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  test('event id field is not shown for new users', async () => {
+    renderView(Configuration);
+
+    extensionBridge.init({
+      settings: {
+        pixelId: '12345'
+      }
+    });
+
+    const { eventIdInput } = getFromFields();
+
+    expect(eventIdInput).toBeNull();
   });
 });

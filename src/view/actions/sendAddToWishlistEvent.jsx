@@ -12,38 +12,30 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
+import formBuilder from './helpers/formBuilder';
 
-import ValueCurrency from './fields/valueCurrency';
-import ContentCategory from './fields/contentCategory';
-import ContentName from './fields/contentName';
-import ContentIds from './fields/contentIds';
-import Contents from './fields/contents';
+export default function SendAddToWishlistEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder([
+    'content_ids',
+    'content_name',
+    'content_category',
+    'contents',
+    'currency',
+    'value',
+    'event_id'
+  ]);
 
-import initialValues from './helpers/getInitValues';
-import settings from './helpers/getSettings';
-import validate from './helpers/validate';
-
-export default function SendAddToWhislistEvent() {
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...initialValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...settings(values)
-      })}
-      validate={(values) => ({
-        ...validate(values)
-      })}
-      render={() => (
-        <>
-          <ValueCurrency />
-          <ContentName />
-          <ContentCategory />
-          <ContentIds />
-          <Contents />
-        </>
-      )}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }

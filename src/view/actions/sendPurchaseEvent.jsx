@@ -12,40 +12,31 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
+import formBuilder from './helpers/formBuilder';
 
-import ValueCurrency from './fields/valueCurrency';
-import NumItems from './fields/numItems';
-import ContentIds from './fields/contentIds';
-import Contents from './fields/contents';
-import ContentType from './fields/contentType';
-import ContentName from './fields/contentName';
+export default function SendPurchagesEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder([
+    'content_ids',
+    'content_name',
+    'content_type',
+    'contents',
+    'currency',
+    'num_items',
+    'value',
+    'event_id'
+  ]);
 
-import initialValues from './helpers/getInitValues';
-import settings from './helpers/getSettings';
-import validate from './helpers/validate';
-
-export default function SendPurchaseEvents() {
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...initialValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...settings(values)
-      })}
-      validate={(values) => ({
-        ...validate(values)
-      })}
-      render={() => (
-        <>
-          <ValueCurrency />
-          <NumItems />
-          <ContentIds />
-          <Contents />
-          <ContentType />
-          <ContentName />
-        </>
-      )}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }

@@ -10,9 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+var sendEvent = require('../helpers/sendEvent');
+
 module.exports = function (settings) {
   var fbq = require('../helpers/getFbQueue');
-  var eventId = turbine.getExtensionSettings().eventId;
+  var extraArguments = {};
+
+  var extensionSettings = turbine.getExtensionSettings();
+  var eventId = extensionSettings && extensionSettings.eventId;
+
+  if (settings && settings.event_id) {
+    eventId = settings.event_id;
+    delete settings.event_id;
+  }
+
+  if (eventId) {
+    extraArguments.eventID = eventId;
+  }
+
   var options = (settings.parameters || []).reduce(function (
     allParameters,
     parameter
@@ -23,12 +38,18 @@ module.exports = function (settings) {
   },
   {});
 
-  fbq('trackCustom', settings.name, options, {
-    eventID: eventId
-  });
+  var extraArgumentsLog = JSON.stringify(extraArguments);
+  var settingsLog = (options && JSON.stringify(options)) || '';
+
+  fbq('trackCustom', settings.name, options, extraArguments);
+
   turbine.logger.log(
-    `Queue command: fbq("trackCustom", "${settings.name}", ${JSON.stringify(
-      options
-    )}) with eventId: ${eventId}.`
+    `Queue command: fbq("trackCustom", "${settings.name}"${
+      settingsLog && settingsLog !== '{}' ? `, ${settingsLog}` : ''
+    }${
+      extraArguments && extraArgumentsLog !== '{}'
+        ? `, ${extraArgumentsLog}`
+        : ''
+    }).`
   );
 };

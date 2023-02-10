@@ -10,36 +10,211 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* eslint-disable camelcase */
+
 jest.mock('../../helpers/getFbQueue.js');
 
 var setupTests = require('../../__test_helpers__/setupTests');
 var sendCustomEvent = require('../sendCustomEvent');
 var getFbQueue = require('../../helpers/getFbQueue.js');
 
-describe('Send Custom Event module', function () {
-  setupTests.setup();
+describe('send custom event function', function () {
+  beforeEach(() => {
+    setupTests.setup();
+  });
 
-  test('add call to facebook queue', function () {
+  afterEach(() => {
+    setupTests.teardown();
+  });
+
+  test('adds call to facebook queue with the received event name and parameters', function () {
     sendCustomEvent({
-      name: 'custom name',
-      parameters: [{ key: 'a', value: 'b' }]
+      name: 'custom event',
+      parameters: [
+        {
+          key: 'value',
+          value: '100'
+        },
+        {
+          key: 'currency',
+          value: 'USD'
+        }
+      ]
     });
+
     expect(getFbQueue.mock.calls[0]).toEqual([
       'trackCustom',
-      'custom name',
-      { a: 'b' },
-      { eventID: setupTests.mockEventId }
+      'custom event',
+      {
+        value: '100',
+        currency: 'USD'
+      },
+      {}
     ]);
   });
 
-  test('logs message to turbine', function () {
-    sendCustomEvent({
-      name: 'custom name',
-      parameters: [{ key: 'a', value: 'b' }]
-    });
+  test(
+    'adds call to facebook queue with the event id present inside the ' +
+      'settings object',
+    function () {
+      sendCustomEvent({
+        name: 'custom event',
+        parameters: [
+          {
+            key: 'value',
+            value: '100'
+          },
+          {
+            key: 'currency',
+            value: 'USD'
+          }
+        ],
+        event_id: 'ABCD'
+      });
+
+      expect(getFbQueue.mock.calls[0]).toEqual([
+        'trackCustom',
+        'custom event',
+        {
+          value: '100',
+          currency: 'USD'
+        },
+        { eventID: 'ABCD' }
+      ]);
+    }
+  );
+
+  test(
+    'adds call to facebook queue with the event id present inside the ' +
+      'extension settings object',
+    function () {
+      setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AZA' }) });
+
+      sendCustomEvent({
+        name: 'custom event',
+        parameters: [
+          {
+            key: 'value',
+            value: '100'
+          },
+          {
+            key: 'currency',
+            value: 'USD'
+          }
+        ]
+      });
+
+      expect(getFbQueue.mock.calls[0]).toEqual([
+        'trackCustom',
+        'custom event',
+        {
+          value: '100',
+          currency: 'USD'
+        },
+        { eventID: 'AZA' }
+      ]);
+    }
+  );
+
+  test(
+    'adds call to facebook queue with the event id present inside the ' +
+      'settings object even when the extension setttings contains an event id too',
+    function () {
+      setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AZA' }) });
+
+      sendCustomEvent({
+        name: 'custom event',
+        parameters: [
+          {
+            key: 'value',
+            value: '100'
+          },
+          {
+            key: 'currency',
+            value: 'USD'
+          }
+        ],
+        event_id: 'ABCD'
+      });
+
+      expect(getFbQueue.mock.calls[0]).toEqual([
+        'trackCustom',
+        'custom event',
+        {
+          value: '100',
+          currency: 'USD'
+        },
+        { eventID: 'ABCD' }
+      ]);
+    }
+  );
+
+  test('logs message to turbine when no settings are present', function () {
+    sendCustomEvent({ name: 'custom event' });
+
     expect(turbine.logger.log.mock.calls[0]).toEqual([
-      'Queue command: fbq("trackCustom", "custom name", {"a":"b"})' +
-        ` with eventId: ${setupTests.mockEventId}.`
+      'Queue command: fbq("trackCustom", "custom event").'
     ]);
   });
+
+  test('logs message to turbine when settings is present', function () {
+    sendCustomEvent({
+      name: 'custom event',
+      parameters: [
+        {
+          key: 'value',
+          value: '100'
+        }
+      ]
+    });
+
+    expect(turbine.logger.log.mock.calls[0]).toEqual([
+      'Queue command: fbq("trackCustom", "custom event", {"value":"100"}).'
+    ]);
+  });
+
+  test(
+    'logs message to turbine when event id is present inside ' +
+      ' the settings object',
+    function () {
+      sendCustomEvent({
+        name: 'custom event',
+        parameters: [
+          {
+            key: 'value',
+            value: '100'
+          },
+          {}
+        ],
+        event_id: 'ABC'
+      });
+
+      expect(turbine.logger.log.mock.calls[0]).toEqual([
+        'Queue command: fbq("trackCustom", "custom event", {"value":"100"}, {"eventID":"ABC"}).'
+      ]);
+    }
+  );
+
+  test(
+    'logs message to turbine when event id is present inside ' +
+      ' the extension settings object',
+    function () {
+      setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AAA' }) });
+
+      sendCustomEvent({
+        name: 'custom event',
+        parameters: [
+          {
+            key: 'value',
+            value: '100'
+          },
+          {}
+        ]
+      });
+
+      expect(turbine.logger.log.mock.calls[0]).toEqual([
+        'Queue command: fbq("trackCustom", "custom event", {"value":"100"}, {"eventID":"AAA"}).'
+      ]);
+    }
+  );
 });

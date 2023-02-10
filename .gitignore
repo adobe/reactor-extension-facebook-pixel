@@ -2,6 +2,7 @@ node_modules
 coverage
 test_results
 dist
+.eslintcache
 .sandbox
 .sandbox/**
 .entries

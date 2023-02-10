@@ -38,23 +38,28 @@ afterEach(() => {
 const getFromFields = () => {
   return {
     eventNameInput: screen.queryByLabelText(/name/i),
+    eventIdInput: screen.queryByLabelText(/event id/i, {
+      selector: '[name="event_id"]'
+    }),
     addButton: screen.queryByLabelText(/add another/i)
   };
 };
 
-describe('Configuration view', () => {
+describe('Send custom event view', () => {
   test('sets form values from settings', async () => {
     renderView(SendCustomEvent);
 
     extensionBridge.init({
       settings: {
         name: 'custom event',
+        event_id: 'ABC',
         parameters: [{ key: 'a', value: 'b' }]
       }
     });
 
-    const { eventNameInput } = getFromFields();
+    const { eventNameInput, eventIdInput } = getFromFields();
     expect(eventNameInput.value).toBe('custom event');
+    expect(eventIdInput.value).toBe('ABC');
 
     expect(getTextFieldByLabel('Parameters Key 0').value).toBe('a');
     expect(getTextFieldByLabel('Parameters Value 0').value).toBe('b');
@@ -70,14 +75,16 @@ describe('Configuration view', () => {
       }
     });
 
-    const { eventNameInput } = getFromFields();
+    const { eventNameInput, eventIdInput } = getFromFields();
 
     await changeInputValue(eventNameInput, 'custom event 2');
+    await changeInputValue(eventIdInput, 'A123');
     await changeInputValue(getTextFieldByLabel('Parameters Key 0'), 'aa');
     await changeInputValue(getTextFieldByLabel('Parameters Value 0'), 'bb');
 
     expect(extensionBridge.getSettings()).toEqual({
       name: 'custom event 2',
+      event_id: 'A123',
       parameters: [{ key: 'aa', value: 'bb' }]
     });
   });

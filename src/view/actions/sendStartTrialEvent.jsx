@@ -12,26 +12,22 @@ governing permissions and limitations under the License.
 import React from 'react';
 
 import ExtensionView from '../components/extensionView';
+import formBuilder from './helpers/formBuilder';
 
-import ValueCurrency from './fields/valueCurrency';
+export default function SendStartTrialEvent() {
+  const {
+    getInitialValues,
+    getSettings,
+    validate,
+    getReactComponent: Fields
+  } = formBuilder(['currency', 'predicted_ltv', 'value', 'event_id']);
 
-import initialValues from './helpers/getInitValues';
-import settings from './helpers/getSettings';
-import validate from './helpers/validate';
-
-export default function SendTrialEvent() {
   return (
     <ExtensionView
-      getInitialValues={({ initInfo }) => ({
-        ...initialValues(initInfo)
-      })}
-      getSettings={({ values }) => ({
-        ...settings(values)
-      })}
-      validate={(values) => ({
-        ...validate(values)
-      })}
-      render={() => <ValueCurrency />}
+      getInitialValues={getInitialValues}
+      getSettings={getSettings}
+      validate={validate}
+      render={() => <Fields />}
     />
   );
 }
