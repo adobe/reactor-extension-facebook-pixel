@@ -18,24 +18,27 @@ var setupTests = require('../../__test_helpers__/setupTests');
 var sendSearchEvent = require('../sendSearchEvent');
 var getFbQueue = require('../../helpers/getFbQueue.js');
 
-describe('Send Search Event module', function () {
-  setupTests.setup();
+describe('send event function', function () {
+  beforeEach(() => {
+    setupTests.setup();
+  });
 
-  test('add call to facebook queue', function () {
-    sendSearchEvent({ searchString: 'search' });
+  afterEach(() => {
+    setupTests.teardown();
+  });
+
+  test('adds call to facebook queue when the old search settings property is used', function () {
+    sendSearchEvent({
+      searchEvent: 'ABC'
+    });
+
     expect(getFbQueue.mock.calls[0]).toEqual([
       'track',
       'Search',
-      { search_string: 'search' },
-      { eventID: setupTests.mockEventId }
-    ]);
-  });
-
-  test('logs message to turbine', function () {
-    sendSearchEvent({ searchString: 'search' });
-    expect(turbine.logger.log.mock.calls[0]).toEqual([
-      'Queue command: fbq("track", "Search", {"search_string":"search"})' +
-        ` with eventId: ${setupTests.mockEventId}.`
+      {
+        search_event: 'ABC'
+      },
+      {}
     ]);
   });
 });

@@ -10,6 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import React from 'react';
+import { ContextualHelp, Heading, Content, Link } from '@adobe/react-spectrum';
+
 import contents from './fields/contents/contentsFieldManifest';
 import contentIds from './fields/contentIds/contentIdsFieldManifest';
 import contentType from './fields/contentType/contentTypeFieldManifest';
@@ -56,6 +59,35 @@ export default {
   content_name: {
     label: 'Content Name',
     hasDataElementSupport: true
+  },
+  event_id: {
+    label: 'Event ID',
+    hasDataElementSupport: true,
+    contextualHelp: (
+      <ContextualHelp>
+        <Heading>Need help?</Heading>
+        <Content>
+          <p>
+            The Event ID parameter is an identifier that can uniquely
+            distinguish between similar events sent through Meta Pixel and the
+            Conversions API.
+          </p>
+          <p>
+            Learn more about{' '}
+            <Link>
+              <a
+                href="https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events"
+                rel="noreferrer"
+                target="_blank"
+              >
+                handling duplicate Pixel and Conversions API events
+              </a>
+            </Link>
+            .
+          </p>
+        </Content>
+      </ContextualHelp>
+    )
   },
   content_category: {
     label: 'Content Category',

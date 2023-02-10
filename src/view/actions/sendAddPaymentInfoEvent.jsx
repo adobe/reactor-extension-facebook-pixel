@@ -25,7 +25,8 @@ export default function SendAddPaymentInfoEvent() {
     'content_ids',
     'contents',
     'currency',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

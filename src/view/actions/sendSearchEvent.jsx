@@ -26,7 +26,8 @@ export default function SendSearchEvent() {
     'contents',
     'currency',
     'search_string',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

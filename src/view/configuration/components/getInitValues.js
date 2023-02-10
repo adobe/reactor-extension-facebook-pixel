@@ -13,9 +13,11 @@ governing permissions and limitations under the License.
 export default (initInfo) => {
   const { settings } = initInfo;
   const { pixelId = '', eventId = '' } = settings || {};
+  const showEventIdField = Boolean(eventId);
 
   return {
     pixelId,
-    eventId
+    eventId,
+    showEventIdField
   };
 };

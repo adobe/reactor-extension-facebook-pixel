@@ -15,10 +15,10 @@ governing permissions and limitations under the License.
 jest.mock('../../helpers/getFbQueue.js');
 
 var setupTests = require('../../__test_helpers__/setupTests');
-var sendCustomEvent = require('../sendCustomEvent');
+var sendEvent = require('../sendEvent');
 var getFbQueue = require('../../helpers/getFbQueue.js');
 
-describe('send custom event function', function () {
+describe('send event function', function () {
   beforeEach(() => {
     setupTests.setup();
   });
@@ -28,23 +28,14 @@ describe('send custom event function', function () {
   });
 
   test('adds call to facebook queue with the received event name and parameters', function () {
-    sendCustomEvent({
-      name: 'custom event',
-      parameters: [
-        {
-          key: 'value',
-          value: '100'
-        },
-        {
-          key: 'currency',
-          value: 'USD'
-        }
-      ]
+    sendEvent('AddPaymentInfo', {
+      value: '100',
+      currency: 'USD'
     });
 
     expect(getFbQueue.mock.calls[0]).toEqual([
-      'trackCustom',
-      'custom event',
+      'track',
+      'AddPaymentInfo',
       {
         value: '100',
         currency: 'USD'
@@ -57,24 +48,15 @@ describe('send custom event function', function () {
     'adds call to facebook queue with the event id present inside the ' +
       'settings object',
     function () {
-      sendCustomEvent({
-        name: 'custom event',
-        parameters: [
-          {
-            key: 'value',
-            value: '100'
-          },
-          {
-            key: 'currency',
-            value: 'USD'
-          }
-        ],
+      sendEvent('AddPaymentInfo', {
+        value: '100',
+        currency: 'USD',
         event_id: 'ABCD'
       });
 
       expect(getFbQueue.mock.calls[0]).toEqual([
-        'trackCustom',
-        'custom event',
+        'track',
+        'AddPaymentInfo',
         {
           value: '100',
           currency: 'USD'
@@ -90,23 +72,14 @@ describe('send custom event function', function () {
     function () {
       setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AZA' }) });
 
-      sendCustomEvent({
-        name: 'custom event',
-        parameters: [
-          {
-            key: 'value',
-            value: '100'
-          },
-          {
-            key: 'currency',
-            value: 'USD'
-          }
-        ]
+      sendEvent('AddPaymentInfo', {
+        value: '100',
+        currency: 'USD'
       });
 
       expect(getFbQueue.mock.calls[0]).toEqual([
-        'trackCustom',
-        'custom event',
+        'track',
+        'AddPaymentInfo',
         {
           value: '100',
           currency: 'USD'
@@ -122,24 +95,15 @@ describe('send custom event function', function () {
     function () {
       setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AZA' }) });
 
-      sendCustomEvent({
-        name: 'custom event',
-        parameters: [
-          {
-            key: 'value',
-            value: '100'
-          },
-          {
-            key: 'currency',
-            value: 'USD'
-          }
-        ],
+      sendEvent('AddPaymentInfo', {
+        value: '100',
+        currency: 'USD',
         event_id: 'ABCD'
       });
 
       expect(getFbQueue.mock.calls[0]).toEqual([
-        'trackCustom',
-        'custom event',
+        'track',
+        'AddPaymentInfo',
         {
           value: '100',
           currency: 'USD'
@@ -150,26 +114,26 @@ describe('send custom event function', function () {
   );
 
   test('logs message to turbine when no settings are present', function () {
-    sendCustomEvent({ name: 'custom event' });
+    sendEvent('AddPaymentInfo');
 
     expect(turbine.logger.log.mock.calls[0]).toEqual([
-      'Queue command: fbq("trackCustom", "custom event").'
+      'Queue command: fbq("track", "AddPaymentInfo").'
+    ]);
+  });
+
+  test('logs message to turbine when settings is an empty object', function () {
+    sendEvent('AddPaymentInfo', {});
+
+    expect(turbine.logger.log.mock.calls[0]).toEqual([
+      'Queue command: fbq("track", "AddPaymentInfo").'
     ]);
   });
 
   test('logs message to turbine when settings is present', function () {
-    sendCustomEvent({
-      name: 'custom event',
-      parameters: [
-        {
-          key: 'value',
-          value: '100'
-        }
-      ]
-    });
+    sendEvent('AddPaymentInfo', { value: 100 });
 
     expect(turbine.logger.log.mock.calls[0]).toEqual([
-      'Queue command: fbq("trackCustom", "custom event", {"value":"100"}).'
+      'Queue command: fbq("track", "AddPaymentInfo", {"value":100}).'
     ]);
   });
 
@@ -177,20 +141,10 @@ describe('send custom event function', function () {
     'logs message to turbine when event id is present inside ' +
       ' the settings object',
     function () {
-      sendCustomEvent({
-        name: 'custom event',
-        parameters: [
-          {
-            key: 'value',
-            value: '100'
-          },
-          {}
-        ],
-        event_id: 'ABC'
-      });
+      sendEvent('AddPaymentInfo', { value: 100, event_id: 'ABC' });
 
       expect(turbine.logger.log.mock.calls[0]).toEqual([
-        'Queue command: fbq("trackCustom", "custom event", {"value":"100"}, {"eventID":"ABC"}).'
+        'Queue command: fbq("track", "AddPaymentInfo", {"value":100}, {"eventID":"ABC"}).'
       ]);
     }
   );
@@ -200,20 +154,10 @@ describe('send custom event function', function () {
       ' the extension settings object',
     function () {
       setupTests.setup({ getExtensionSettings: () => ({ eventId: 'AAA' }) });
-
-      sendCustomEvent({
-        name: 'custom event',
-        parameters: [
-          {
-            key: 'value',
-            value: '100'
-          },
-          {}
-        ]
-      });
+      sendEvent('AddPaymentInfo', { value: 100 });
 
       expect(turbine.logger.log.mock.calls[0]).toEqual([
-        'Queue command: fbq("trackCustom", "custom event", {"value":"100"}, {"eventID":"AAA"}).'
+        'Queue command: fbq("track", "AddPaymentInfo", {"value":100}, {"eventID":"AAA"}).'
       ]);
     }
   );

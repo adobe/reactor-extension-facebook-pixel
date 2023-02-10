@@ -130,6 +130,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -219,6 +223,10 @@
                 "minItems": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -316,6 +324,10 @@
                 "minItems": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -420,6 +432,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -520,6 +536,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -613,6 +633,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -724,6 +748,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -760,6 +788,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -803,6 +835,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -811,32 +847,87 @@
     {
       "name": "send-contact-event",
       "displayName": "Send Contact Event",
+      "viewPath": "actions/sendContactEvent.html",
       "libPath": "src/lib/actions/sendContactEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-customize-product-event",
       "displayName": "Send Customize Product Event",
+      "viewPath": "actions/sendCustomizeProductEvent.html",
       "libPath": "src/lib/actions/sendCustomizeProductEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-donate-event",
       "displayName": "Send Donate Event",
+      "viewPath": "actions/sendDonateEvent.html",
       "libPath": "src/lib/actions/sendDonateEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-find-location-event",
       "displayName": "Send Find Location Event",
+      "viewPath": "actions/sendFindLocationEvent.html",
       "libPath": "src/lib/actions/sendFindLocationEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-schedule-event",
       "displayName": "Send Schedule Event",
+      "viewPath": "actions/sendScheduleEvent.html",
       "libPath": "src/lib/actions/sendScheduleEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-start-trial-event",
@@ -872,6 +963,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -880,8 +975,19 @@
     {
       "name": "send-submit-application-event",
       "displayName": "Send Submit Application Event",
+      "viewPath": "actions/sendSubmitApplicationEvent.html",
       "libPath": "src/lib/actions/sendSubmitApplicationEvent.js",
-      "schema": {}
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
     },
     {
       "name": "send-subscribe-event",
@@ -917,6 +1023,10 @@
                 "minLength": 1
               }
             ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -953,6 +1063,10 @@
               "required": ["key", "value"]
             },
             "minItems": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false,

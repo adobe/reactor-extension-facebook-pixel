@@ -19,9 +19,14 @@ import {
   Content,
   Link
 } from '@adobe/react-spectrum';
+
+import { useFormContext } from 'react-hook-form';
 import WrappedTextField from '../../components/wrappedTextField';
 
 export default function ConfigurationFields() {
+  const { watch } = useFormContext();
+  const [showEventIdField] = watch(['showEventIdField']);
+
   return (
     <Flex direction="column" gap="size-65">
       <WrappedTextField
@@ -34,38 +39,44 @@ export default function ConfigurationFields() {
         supportDataElement
       />
 
-      <WrappedTextField
-        name="eventId"
-        component={TextField}
-        width="size-4600"
-        label="Event ID"
-        contextualHelp={
-          <ContextualHelp>
-            <Heading>Need help?</Heading>
-            <Content>
-              <p>
-                The Event ID parameter is an identifier that can uniquely
-                distinguish between similar events sent through Meta Pixel and
-                the Conversions API.
-              </p>
-              <p>
-                Learn more about{' '}
-                <Link>
-                  <a
-                    href="https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    handling duplicate Pixel and Conversions API events
-                  </a>
-                </Link>
-                .
-              </p>
-            </Content>
-          </ContextualHelp>
-        }
-        supportDataElement
-      />
+      {showEventIdField && (
+        <WrappedTextField
+          name="eventId"
+          component={TextField}
+          width="size-4600"
+          label="Event ID"
+          description={
+            'This field is deprecated.  Please use the Event ID fields from ' +
+            'inside each action views.'
+          }
+          contextualHelp={
+            <ContextualHelp>
+              <Heading>Need help?</Heading>
+              <Content>
+                <p>
+                  The Event ID parameter is an identifier that can uniquely
+                  distinguish between similar events sent through Meta Pixel and
+                  the Conversions API.
+                </p>
+                <p>
+                  Learn more about{' '}
+                  <Link>
+                    <a
+                      href="https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      handling duplicate Pixel and Conversions API events
+                    </a>
+                  </Link>
+                  .
+                </p>
+              </Content>
+            </ContextualHelp>
+          }
+          supportDataElement
+        />
+      )}
     </Flex>
   );
 }

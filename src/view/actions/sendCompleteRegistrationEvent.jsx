@@ -20,7 +20,7 @@ export default function SendCompleteRegistrationEvent() {
     getSettings,
     validate,
     getReactComponent: Fields
-  } = formBuilder(['content_name', 'currency', 'status', 'value']);
+  } = formBuilder(['content_name', 'currency', 'status', 'value', 'event_id']);
 
   return (
     <ExtensionView

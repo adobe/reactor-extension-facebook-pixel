@@ -10,22 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-var mockEventId = '11111';
-
 module.exports = {
-  mockEventId: mockEventId,
-  setup: function () {
-    beforeEach(() => {
-      global.turbine = {
-        logger: { log: jest.fn() },
-        getExtensionSettings: function () {
-          return { eventId: mockEventId };
-        }
-      };
-    });
-    afterEach(() => {
-      jest.clearAllMocks();
-      delete global.turbine;
-    });
+  setup: function (
+    { getExtensionSettings } = { getExtensionSettings: () => {} }
+  ) {
+    global.turbine = {
+      logger: { log: jest.fn() },
+      getExtensionSettings
+    };
+  },
+  teardown: () => {
+    jest.clearAllMocks();
+    delete global.turbine;
   }
 };

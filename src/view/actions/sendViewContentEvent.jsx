@@ -27,7 +27,8 @@ export default function SendViewContentView() {
     'content_type',
     'contents',
     'currency',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

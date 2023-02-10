@@ -27,7 +27,8 @@ export default function SendPurchagesEvent() {
     'contents',
     'currency',
     'num_items',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

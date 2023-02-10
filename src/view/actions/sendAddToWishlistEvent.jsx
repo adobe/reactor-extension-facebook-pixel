@@ -26,7 +26,8 @@ export default function SendAddToWishlistEvent() {
     'content_category',
     'contents',
     'currency',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

@@ -26,7 +26,8 @@ export default function SendAddToCartEvent() {
     'content_type',
     'contents',
     'currency',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

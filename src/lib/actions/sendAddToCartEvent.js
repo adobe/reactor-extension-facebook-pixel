@@ -10,15 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-module.exports = function (settings) {
-  var fbq = require('../helpers/getFbQueue');
-  var eventId = turbine.getExtensionSettings().eventId;
+var sendEvent = require('../helpers/sendEvent');
 
-  fbq('track', 'AddToCart', settings, {
-    eventID: eventId
-  });
-  turbine.logger.log(
-    `Queue command: fbq("track", "AddToCart", ${JSON.stringify(settings)})` +
-      ` with eventId: ${eventId}.`
-  );
+module.exports = function (settings) {
+  sendEvent('AddToCart', settings);
 };

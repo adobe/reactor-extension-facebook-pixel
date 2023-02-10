@@ -10,9 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-var sendEvent = require('../helpers/sendEvent');
-
-module.exports = function (settings) {
+module.exports = function (eventName, settings) {
   var fbq = require('../helpers/getFbQueue');
   var extraArguments = {};
 
@@ -28,23 +26,13 @@ module.exports = function (settings) {
     extraArguments.eventID = eventId;
   }
 
-  var options = (settings.parameters || []).reduce(function (
-    allParameters,
-    parameter
-  ) {
-    allParameters[parameter.key] = parameter.value;
-
-    return allParameters;
-  },
-  {});
-
   var extraArgumentsLog = JSON.stringify(extraArguments);
-  var settingsLog = (options && JSON.stringify(options)) || '';
+  var settingsLog = (settings && JSON.stringify(settings)) || '';
 
-  fbq('trackCustom', settings.name, options, extraArguments);
+  fbq('track', eventName, settings, extraArguments);
 
   turbine.logger.log(
-    `Queue command: fbq("trackCustom", "${settings.name}"${
+    `Queue command: fbq("track", "${eventName}"${
       settingsLog && settingsLog !== '{}' ? `, ${settingsLog}` : ''
     }${
       extraArguments && extraArgumentsLog !== '{}'

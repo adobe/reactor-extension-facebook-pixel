@@ -20,7 +20,13 @@ export default function SendLeadEvent() {
     getSettings,
     validate,
     getReactComponent: Fields
-  } = formBuilder(['content_name', 'content_category', 'currency', 'value']);
+  } = formBuilder([
+    'content_name',
+    'content_category',
+    'currency',
+    'value',
+    'event_id'
+  ]);
 
   return (
     <ExtensionView

@@ -26,7 +26,8 @@ export default function SendInitiateCheckoutEvent() {
     'contents',
     'currency',
     'num_items',
-    'value'
+    'value',
+    'event_id'
   ]);
 
   return (

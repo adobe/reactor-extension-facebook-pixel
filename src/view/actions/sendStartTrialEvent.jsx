@@ -20,7 +20,7 @@ export default function SendStartTrialEvent() {
     getSettings,
     validate,
     getReactComponent: Fields
-  } = formBuilder(['currency', 'predicted_ltv', 'value']);
+  } = formBuilder(['currency', 'predicted_ltv', 'value', 'event_id']);
 
   return (
     <ExtensionView
