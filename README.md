@@ -2,6 +2,8 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/adobe/reactor-extension-meta-pixel/node.js.yml?style=flat)](https://github.com/adobe/reactor-extension-meta-pixel/actions)
 [![Coverage Status](https://coveralls.io/repos/github/adobe/reactor-extension-meta-pixel/badge.svg?branch=main)](https://coveralls.io/github/adobe/reactor-extension-meta-pixel?branch=main)
+[![npm (scoped with tag)](https://img.shields.io/npm/v/@adobe/reactor-extension-meta-pixel.svg?style=flat)](https://www.npmjs.com/package/@adobe/reactor-extension-meta-pixel)
+
 
 This is the Meta Pixel extension.
 
