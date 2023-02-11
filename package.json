@@ -7,7 +7,10 @@
     "url": "http://adobe.com",
     "email": "reactor@adobe.com"
   },
-  "license": "ISC",
+  "license": "Apache 2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:adobe/reactor-extension-meta-pixel.git"
