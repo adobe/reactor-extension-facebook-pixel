@@ -374,7 +374,7 @@
             "minLength": 1
           },
           "content_type": {
-            "oneOf": [
+            "anyOf": [
               {
                 "enum": ["product", "product_group"]
               },
@@ -478,7 +478,7 @@
             "minLength": 1
           },
           "content_type": {
-            "oneOf": [
+            "anyOf": [
               {
                 "enum": ["product", "product_group"]
               },
@@ -679,7 +679,7 @@
             "minLength": 1
           },
           "content_type": {
-            "oneOf": [
+            "anyOf": [
               {
                 "enum": ["product", "product_group"]
               },
