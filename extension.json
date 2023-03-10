@@ -5,6 +5,7 @@
   "displayName": "Meta Pixel",
   "iconPath": "resources/icons/meta.svg",
   "platform": "web",
+  "exchangeUrl": "https://exchange.adobe.com/apps/ec/109167/meta-pixel",
   "author": {
     "name": "Adobe",
     "url": "http://adobe.com",
