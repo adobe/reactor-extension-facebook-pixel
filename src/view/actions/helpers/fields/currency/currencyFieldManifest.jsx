@@ -48,7 +48,7 @@ export default {
 
     if (currency && currency.length < 3) {
       errors.currency =
-        'The currency must be a ISO-8601  currency code or a data element.';
+        'The currency must be a ISO-4217 currency code or a data element.';
     }
 
     return errors;
