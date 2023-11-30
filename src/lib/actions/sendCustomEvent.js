@@ -35,8 +35,7 @@ module.exports = function (settings) {
     allParameters[parameter.key] = parameter.value;
 
     return allParameters;
-  },
-  {});
+  }, {});
 
   var extraArgumentsLog = JSON.stringify(extraArguments);
   var settingsLog = (options && JSON.stringify(options)) || '';

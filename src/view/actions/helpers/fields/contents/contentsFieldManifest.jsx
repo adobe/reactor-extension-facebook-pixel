@@ -94,9 +94,8 @@ export default {
             !isDataElementToken(element.quantity) &&
             !isNumber(castToNumberIfString(element.quantity))
           ) {
-            errors[
-              `contentsJsonPairs.${id}.quantity`
-            ] = `The quantity value must be a number or a data element.`;
+            errors[`contentsJsonPairs.${id}.quantity`] =
+              `The quantity value must be a number or a data element.`;
           }
         });
     }

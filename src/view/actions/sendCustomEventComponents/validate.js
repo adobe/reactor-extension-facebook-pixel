@@ -26,9 +26,8 @@ export default (values) => {
     }
 
     if (configuredParameters.indexOf(parameter.key) !== -1) {
-      errors[
-        `parameters.${index}.key`
-      ] = `Key "${parameter.key}" is already configured.`;
+      errors[`parameters.${index}.key`] =
+        `Key "${parameter.key}" is already configured.`;
     } else if (parameter.key) {
       configuredParameters.push(parameter.key);
     }
