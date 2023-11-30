@@ -46,7 +46,10 @@ export default {
       return errors;
     }
 
-    if (currency && currency.length < 3) {
+    if (
+      currency &&
+      currencies.filter(({ id }) => id === currency).length === 0
+    ) {
       errors.currency =
         'The currency must be a ISO-4217 currency code or a data element.';
     }
