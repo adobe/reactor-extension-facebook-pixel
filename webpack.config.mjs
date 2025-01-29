@@ -10,18 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import path from 'path';
+import fs from 'fs';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, resolve, join } from 'path';
 
-import extension from './extension.json' assert { type: 'json' };
 import camelCase from 'camelcase';
 import capitalize from 'capitalize';
 import createEntryFile from './createEntryFile.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const configPath = join(__dirname, './extension.json');
+
+const extension = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 const entries = {};
 const plugins = [];
 
@@ -95,7 +97,7 @@ export default (env, argv) => {
     devtool: argv.mode === 'development' ? 'source-map' : false,
     plugins: plugins,
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: resolve(__dirname, 'dist'),
       filename: '[name].js',
       chunkFilename: '[name].js'
     },
